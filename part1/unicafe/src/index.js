@@ -5,7 +5,17 @@ export const GOODSCORE    = 1
 export const NEUTRALSCORE = 0
 export const BADSCORE     = -1
 
-const Statisctics = (props) => {
+const Statistics = (props) => {
+
+  if (!props.feedback) {
+    return (
+       <>
+        <h1>Statistics</h1>
+        <p>No feedback given</p>
+      </>
+    )
+  }
+
   const good    = props.good
   const neutral = props.neutral
   const bad     = props.bad
@@ -50,17 +60,34 @@ const Statisctics = (props) => {
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [good, setGood]         = useState(0)
+  const [neutral, setNeutral]   = useState(0)
+  const [bad, setBad]           = useState(0)
+  const [feedback, setFeedback] = useState(false)
+
+  const statisticsProps = {
+    good: good,
+    neutral: neutral,
+    bad: bad,
+    feedback: feedback
+  }
 
   return (
     <div>
       <h1>Give feedback</h1>
-      <button onClick={()=> setGood(good + 1)}>good</button>
-      <button onClick={()=> setNeutral(neutral + 1)}>neutral</button>
-      <button onClick={()=> setBad(bad + 1)}>bad</button>
-      <Statisctics good={good} neutral={neutral} bad={bad}/>
+      <button onClick={()=> {
+        setFeedback(true)
+        setGood(good + 1)
+      } }>good</button>
+      <button onClick={()=> {
+        setFeedback(true)
+        setNeutral(neutral + 1)
+      } }>neutral</button>
+      <button onClick={()=> {
+        setFeedback(true)
+        setBad(bad + 1)
+      } }>bad</button>
+      <Statistics {...statisticsProps}/>
     </div>
   )
 }
