@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom';
 import Course from './components/course'
-
 const App = () => {
   const courses = [
     {
