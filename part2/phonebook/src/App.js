@@ -2,31 +2,40 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { id: 1, name: 'Arto Hellas' }
+    { id: 1, name: 'Arto Hellas', number: '123-123-123'}
   ])
-  const [ newName, setNewName ] = useState('')
+  const [ newPerson, setNewPerson ] = useState({ name: '', number: ''})
 
   const addNewPerson = (event) => {
 
-    if (persons.find((p) => p.name === newName) ? true : false) {
-      alert(`${newName} is already added to phonebook`)
-      return true
+    if (persons.find((p) => p.name === newPerson.name ) ? true : false) {
+      alert(`${newPerson.name } name is already added to phonebook`)
     }
 
-    event.preventDefault()
-    const personObject = {
-      name: newName,
-      id: persons.length + 1,
+    if (persons.find((p) => p.number === newPerson.number ) ? true : false) {
+      alert(`${newPerson.number } number is already added to phonebook`)
+    } else {
+
+      event.preventDefault()
+      const personObject = {
+        name: newPerson.name,
+        number: newPerson.number,
+        id: persons.length + 1,
+      }
+
+      setPersons(persons.concat(personObject))
+      setNewPerson({ name: '', number: ''})
     }
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
   }
 
   const handleNameChange = (event) => {
-    setNewName(event.target.value)
+    setNewPerson({ name: event.target.value, number: newPerson.number})
   }
 
+  const handleNumberChange = (event) => {
+    setNewPerson({ name: newPerson.name, number: event.target.value,})
+  }
 
   return (
     <div>
@@ -34,8 +43,12 @@ const App = () => {
       <form onSubmit={addNewPerson}>
         <div>
           name: <input
-          value={newName}
+          value={newPerson.name}
           onChange={handleNameChange}/>
+          <br/>
+          number: <input
+          value={newPerson.number}
+          onChange={handleNumberChange}/>
         </div>
         <div>
           <button type="submit">add</button>
@@ -44,7 +57,7 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map((person) =>
-          <li key={person.id}>{person.name}</li>
+          <li key={person.id}>{person.name}  .  {person.number}</li>
         )}
       </ul>
     </div>
