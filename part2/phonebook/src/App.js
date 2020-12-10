@@ -7,6 +7,12 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
 
   const addNewPerson = (event) => {
+
+    if (persons.find((p) => p.name === newName) ? true : false) {
+      alert(`${newName} is already added to phonebook`)
+      return true
+    }
+
     event.preventDefault()
     const personObject = {
       name: newName,
